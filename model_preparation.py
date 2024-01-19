@@ -7,6 +7,7 @@ import random
 import numpy as np
 import datetime as dt
 import tensorflow as tf
+import pickle
 from collections import deque
 # import matplotlib.pyplot as plt
 
@@ -33,7 +34,7 @@ IMAGE_HEIGHT , IMAGE_WIDTH = 64, 64
 SEQUENCE_LENGTH = 20
 
 # Specify the directory containing the UCF50 dataset. 
-DATASET_DIR = "MainDataset/UCF-101"
+DATASET_DIR = "dataset/UCF101"
 
 
 # List all folders within the parent directory
@@ -44,9 +45,9 @@ DATASET_DIR = "MainDataset/UCF-101"
 #     print(folder_name)
 
 # Specify the list containing the names of the classes used for training. Feel free to choose any set of classes.
-# CLASSES_LIST = folder_names
+CLASSES_LIST = pickle.load(open('filenames.pkl','rb'))
 
-CLASSES_LIST = ["WalkingWithDog", "TaiChi", "Swing", "HorseRace"]
+# CLASSES_LIST = ["WalkingWithDog", "TaiChi", "Swing", "HorseRace"]
 
 
 # Create a Function to Extract, Resize & Normalize Frames
@@ -239,7 +240,7 @@ early_stopping_callback = EarlyStopping(monitor = 'val_loss', patience = 15, mod
 LRCN_model.compile(loss = 'categorical_crossentropy', optimizer = 'Adam', metrics = ["accuracy"])
 
 # Start training the model.
-LRCN_model_training_history = LRCN_model.fit(x = features_train, y = labels_train, epochs = 100, batch_size = 8 ,
+LRCN_model_training_history = LRCN_model.fit(x = features_train, y = labels_train, epochs = 70, batch_size = 2,
                                              shuffle = True, validation_split = 0.2, callbacks = [early_stopping_callback])
 
 

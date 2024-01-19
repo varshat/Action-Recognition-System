@@ -21,8 +21,9 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import plot_model
 import streamlit as st
-import subprocess
+# import subprocess
 import base64
+import pickle
 
 # Specify the height and width to which each video frame will be resized in our dataset.
 IMAGE_HEIGHT , IMAGE_WIDTH = 64, 64
@@ -31,10 +32,11 @@ IMAGE_HEIGHT , IMAGE_WIDTH = 64, 64
 SEQUENCE_LENGTH = 20
 
 # Specify the directory containing the UCF50 dataset. 
-DATASET_DIR = "MainDataset/UCF-101"
+DATASET_DIR = "dataset/UCF101"
 
 # Specify the list containing the names of the classes used for training. Feel free to choose any set of classes.
-CLASSES_LIST = ["WalkingWithDog", "TaiChi", "Swing", "HorseRace"]
+CLASSES_LIST = pickle.load(open('filenames.pkl','rb'))
+# ["WalkingWithDog", "TaiChi", "Swing", "HorseRace"]
 
 
 # # Make the Output directory if it does not exist
@@ -42,7 +44,7 @@ CLASSES_LIST = ["WalkingWithDog", "TaiChi", "Swing", "HorseRace"]
 # # os.makedirs(test_videos_directory, exist_ok = True)
 
 # Load the saved model
-loaded_model = load_model('savedModel/LRCN_model___Date_Time_2024_01_13__18_38_04___Loss_0.37888357043266296___Accuracy_0.8583333492279053.h5')
+loaded_model = load_model('savedModel/LRCN_model___Date_Time_2024_01_18__21_25_42___Loss_0.9016082882881165___Accuracy_0.8264840245246887.h5')
 
 
 def save_uploaded_file(uploaded_file):
@@ -119,7 +121,7 @@ def predict_on_video(video_file_path, output_file_path, SEQUENCE_LENGTH):
             
             
         # Write predicted class name on top of the frame.
-        cv2.putText(frame, predicted_class_name, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(frame, predicted_class_name, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
 
         # Write The frame into the disk using the VideoWriter Object.
         video_writer.write(frame)
@@ -140,7 +142,7 @@ def predict_on_video(video_file_path, output_file_path, SEQUENCE_LENGTH):
 def main():
     st.title("Action Recognition System")
 
-    uploaded_file = st.file_uploader("Upload a video", type=["mp4", "mov"])
+    uploaded_file = st.file_uploader("Upload a video", type=["mp4", "mov", "avi"])
     
     if uploaded_file:
         st.video(uploaded_file)
