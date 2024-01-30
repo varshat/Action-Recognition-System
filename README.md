@@ -7,7 +7,7 @@ This project implements a Garden Activity Recognition System using approach know
 ## Features
 LRCN Model:  the Long-term Recurrent Convolutional Network (LRCN), which combines CNN and LSTM layers in a single model. The Convolutional layers are used for spatial feature extraction from the frames, and the extracted spatial features are fed to LSTM layer(s) at each time-steps for temporal sequence modeling. This way the network learns spatiotemporal features directly in an end-to-end training, resulting in a robust model.
 
-Dataset: Includes a sample dataset of garden activities for training and evaluation.
+Dataset: https://www.crcv.ucf.edu/data/UCF101.php which includes a sample dataset of garden activities for training and evaluation.
 
 User Interface: A simple user interface for real-time monitoring and visualization of recognized activities.
 
