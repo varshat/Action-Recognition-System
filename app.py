@@ -44,7 +44,7 @@ CLASSES_LIST = pickle.load(open('filenames.pkl','rb'))
 # # os.makedirs(test_videos_directory, exist_ok = True)
 
 # Load the saved model
-loaded_model = load_model('savedModel/LRCN_model___Date_Time_2024_01_18__21_25_42___Loss_0.9016082882881165___Accuracy_0.8264840245246887.h5')
+loaded_model = load_model('savedModel/LRCN_model___Date_Time_2024_01_29__16_56_04___Loss_0.5569551587104797___Accuracy_0.8395990133285522.h5')
 
 
 def save_uploaded_file(uploaded_file):
@@ -121,7 +121,7 @@ def predict_on_video(video_file_path, output_file_path, SEQUENCE_LENGTH):
             
             
         # Write predicted class name on top of the frame.
-        cv2.putText(frame, predicted_class_name, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
+        cv2.putText(frame, predicted_class_name, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2)
 
         # Write The frame into the disk using the VideoWriter Object.
         video_writer.write(frame)
@@ -142,7 +142,7 @@ def predict_on_video(video_file_path, output_file_path, SEQUENCE_LENGTH):
 def main():
     st.title("Action Recognition System")
 
-    uploaded_file = st.file_uploader("Upload a video", type=["mp4", "mov", "avi"])
+    uploaded_file = st.file_uploader("Upload a video", type=["mp4"])
     
     if uploaded_file:
         st.video(uploaded_file)

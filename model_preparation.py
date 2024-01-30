@@ -186,31 +186,29 @@ def create_LRCN_model():
     
     # Define the Model Architecture.
     ########################################################################################################################
-    
     model.add(TimeDistributed(Conv2D(16, (3, 3), padding='same',activation = 'relu'),
                               input_shape = (SEQUENCE_LENGTH, IMAGE_HEIGHT, IMAGE_WIDTH, 3)))
-    
-    model.add(TimeDistributed(MaxPooling2D((4, 4)))) 
-    model.add(TimeDistributed(Dropout(0.25)))
-    
-    model.add(TimeDistributed(Conv2D(32, (3, 3), padding='same',activation = 'relu')))
-    model.add(TimeDistributed(MaxPooling2D((4, 4))))
-    model.add(TimeDistributed(Dropout(0.25)))
-    
-    model.add(TimeDistributed(Conv2D(64, (3, 3), padding='same',activation = 'relu')))
-    model.add(TimeDistributed(MaxPooling2D((2, 2))))
-    model.add(TimeDistributed(Dropout(0.25)))
-    
-    model.add(TimeDistributed(Conv2D(64, (3, 3), padding='same',activation = 'relu')))
-    model.add(TimeDistributed(MaxPooling2D((2, 2))))
-    #model.add(TimeDistributed(Dropout(0.25)))
-                                      
-    model.add(TimeDistributed(Flatten()))
-                                      
-    model.add(LSTM(32))
-                                      
-    model.add(Dense(len(CLASSES_LIST), activation = 'softmax'))
 
+    model.add(TimeDistributed(MaxPooling2D((2, 2))))
+    model.add(TimeDistributed(Dropout(0.25)))
+
+    model.add(TimeDistributed(Conv2D(32, (3, 3), padding='same',activation = 'relu')))
+    model.add(TimeDistributed(MaxPooling2D((2, 2))))
+    model.add(TimeDistributed(Dropout(0.25)))
+
+    model.add(TimeDistributed(Conv2D(64, (3, 3), padding='same',activation = 'relu')))
+    model.add(TimeDistributed(MaxPooling2D((2, 2))))
+    model.add(TimeDistributed(Dropout(0.25)))
+
+    # model.add(TimeDistributed(Conv2D(64, (3, 3), padding='same',activation = 'relu')))
+    # model.add(TimeDistributed(MaxPooling2D((2, 2))))
+    #model.add(TimeDistributed(Dropout(0.25)))
+
+    model.add(TimeDistributed(Flatten()))
+
+    model.add(LSTM(256))
+
+    model.add(Dense(len(CLASSES_LIST), activation = 'softmax'))
     ########################################################################################################################
 
     # Display the models summary.
@@ -234,13 +232,13 @@ print("Model Created Successfully!")
 
 
 # Create an Instance of Early Stopping Callback.
-early_stopping_callback = EarlyStopping(monitor = 'val_loss', patience = 15, mode = 'min', restore_best_weights = True)
+early_stopping_callback = EarlyStopping(monitor = 'val_loss', patience = 5, mode = 'min', restore_best_weights = True)
  
 # Compile the model and specify loss function, optimizer and metrics to the model.
 LRCN_model.compile(loss = 'categorical_crossentropy', optimizer = 'Adam', metrics = ["accuracy"])
 
 # Start training the model.
-LRCN_model_training_history = LRCN_model.fit(x = features_train, y = labels_train, epochs = 70, batch_size = 2,
+LRCN_model_training_history = LRCN_model.fit(x = features_train, y = labels_train, epochs = 150, batch_size = 4,
                                              shuffle = True, validation_split = 0.2, callbacks = [early_stopping_callback])
 
 
