@@ -30,13 +30,12 @@ Training:
 Prepare your dataset and organize it following the provided format.
 Run the training script to train the LRCN model.
 
-python train.py --dataset path/to/dataset --epochs 50
+Output:
 
-Real-time Monitoring:
 
-Start the application and access the UI to monitor garden activities in real-time.
-Contributing
-If you'd like to contribute to the project, please follow the Contribution Guidelines.
+https://github.com/varshat/Action-Recognition-System/assets/7055503/673c433e-b874-4709-826a-387ccbbf6a07
+
+
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
